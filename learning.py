@@ -1,191 +1,85 @@
 '''
-print('成绩提升计算器')
-name = input('请输入你的姓名:',)
-lastYearStr = input('请输入去年成绩:',)
-A = int(A)
-currYear = input('请输入今年成绩:',)
-B = int(B)
+class total():	
+    final_scores = []
+    file_lines = []  
+    def totalscores(self):
+        file = open('scores.txt','r',encoding='utf-8') 
+        self.file_lines = file.readlines()
+        file.close()
+        for i in self.file_lines:			
+            data =i.split()    
+            sum = 0                    
+            for score in data[1:]:     
+                sum = sum + int(score)     
+            result = data[0]+str(sum)+'\n'    
+            self.final_scores.append(result)
+        return self.final_scores
+			
+    def totalscores_write(self):
+        winner = open('winner.txt','w',encoding='utf-8') 
+        winner.writelines(self.totalscores())
+        winner.close()
 
-r = (B-A)/A
-print('你好,%s!,去年考了%d分,今年考了%d分,成绩提升了%.1f%%。'%(name,A,B,r*100))
- 
-print('你好,{0}!,去年考了{1}分,今年考了{2}分,成绩提升了{3:.1%}。'.format(name,A,B,r))
+class order(total):
+	dict_scores = {}
+	list_scores = []
+	def order_txt(self):	
+		self.totalscores_write()
+		file = open('winner.txt','r',encoding='utf-8')
+		file_lines = file.readlines()
+		print(file_lines)
+		for i in file_lines:  # i是字符串。
+			print(i)
+			name = i[:-4]  # 取出名字（注：字符串和列表一样，是通过偏移量来获取内部数据。）
+			score = int(i[-4:-1])  # 取出成绩
+			#print(name)
+			#print(score)
+			self.dict_scores[score] = name  # 将名字和成绩对应存为字典的键值对(注意：这里的成绩是键)
+			self.list_scores.append(score)
+		final_scores=[]
+		self.list_scores.sort(reverse=True)  # reverse，逆行，所以这时列表降序排列，分数从高到低。
+		print(self.list_scores)
+		for i in self.list_scores:
+			result = self.dict_scores[i] + str(i) + '\n'
+			#print(result)
+			#print(self.final_scores)
+			final_scores.append(result)
+		print(final_scores)
+		winner_new = open('winner_new.txt','w',encoding='utf-8') 
+		winner_new.writelines(final_scores)
+		winner_new.close()	
 
-if r >=0.2 and B >=80:
-	print('恭喜！进步非常大')
-else:
-	print('仍需继续努力！')
+	#print(self.final_scores)  # 最终结果
+
+test = order()
+test.order_txt()
 '''
-	
-'''	if else/elif 条件判断
-height = 1.75
-weight = 80.5
-
-bmi=weight/(height**2)
-
-if bmi < 18.5:
-	print('过轻')
-elif 18.5<bmi<25:
-	print('体重正常')
-elif 25<bmi<28:
-	print('体重过重')
-elif 28<bmi<32:
-	print('体重肥胖')
-elif bmi>32:
-	print('体重严重肥胖')
+# 由于系统原因，这里修改后的test.txt不会即时显示变化，你需要重新打开文件-root下的test.txt。
+# 或者在本地新建文件夹，复制test.txt，在本地运行这段代码。
 '''
+with open ('test.txt','r') as f:
+    lines = f.readlines()  # 这时，lines 的数据存放在内存里。
+print(lines)  # 将读取到的内容打印出来，发现实际上读到的是带换行符的字符串。
+with open('test.txt','w') as new:
+    for line in lines:  # 在内存中，对数据进行处理，然后再写到文档里，覆盖之前的内容。
+        if line not in ['0\n','1\n']:  # 注意：这里的条件要根据上面打印出的数据写。
+            new.write(line)            
 
-''' for in 循环
-sum = 0
-for x in  range(101):
-	sum = sum + x
-print(sum)
-'''
-'''
-L=['Bart','Lisa','Adam']
-for name in range(3):
-	print('hello,%s!'%L[name])
-'''
-
-
-'''  while循环
-n = 100
-sum = 0
-while n > 0:
-	sum=sum+n
-	n=n-1
-	
-print(sum)
-'''
-
-
-''' break 中断循环
-n=1
-while n <=100:
-	if n> 10:
-		break
-	print(n)
-	n = n + 1
-print('END')
-'''
-
-''' dict字典 a={key:value}
-a={'Michael':75,'Bob':80,'Tracy':85}
-b=('Michael','Bob','Tracy')
-for name in b:
-	print(a[name])
+# 请你根据学到的新知识，在下面完成对文档“poem1.txt”的修改。
+# 你可以处理命名为“poem1”的文档，参考代码会处理“poem1.txt”。
 '''
 
-''' 在list中查找sarah   list(可变):L=[]  tuple(不可变)=()
-L = ['Michael','Bob','Tracy','Tom','Sarah','Jack']
+with open ('poem1.txt','r') as f:
+	lines =f.readlines()
+print(lines)
+with open ('test.txt','w') as new:
+	for line in lines:
+		if line in ['一弦一柱思华年。\n','只是当时已惘然。\n']:
+			new.write('__。\n')
+		else:
+			new.write(line)
 
-n = 0
-while n <= len(L)-1:
-	
-	if L[n]=='Sarah':
-		print(L[n])
-		print('已找到Sarah')
-		break
-	n = n+1
-'''
-
-
-'''创建函数'''
-'''
-import math 
-def quadratic(a,b,c):
-	t = b*b-4*a*c
-	if t >= 0:
-		x1 = (-b + math.sqrt(t))/(2*a)
-		x2 = (-b - math.sqrt(t))/(2*a)
-		return x1,x2
-	
-	else:
-		print('方程无实数根')
-print('quadratic(2,3,1)=',quadratic(2,3,1))
-if quadratic(2,3,1) != (-0.5,-1.0):
-	print('测试失败')
-else:
-	print('测试成功') 
-'''
-
-import random
-import time
-
-###提示语部分
-print('你好，我是机器人小埋，我们来玩个猜年龄的小游戏吧～(◆◡◆)')
-time.sleep(2)
-
-print('''
-=============================
-   干物妹！うまるちゃんの年齢
-=============================
-''')
-time.sleep(1)
-
-
-print('小埋的真实年龄在1到10之间哦～')
-time.sleep(1)
-
-
-print('不过，你只有5次机会哦～')
-time.sleep(1)
-
-
-print('下面，请输入小埋的年龄吧：')
-
-
-#从0至10产生一个随机整数，并赋值给变量age
-age = random.randint(1,10)
-
-
-#设置次数
-for guess in range(1,6):
-   
-   #输入玩家猜测的年龄
-    choice=int(input())
-    
-    #判读玩家输入的年龄是否等于正确的年龄
-    if choice<age:
-        print('小埋的提示：你猜小了（；´д｀）ゞ。。。。')
-                
-    elif choice>age:
-        print('小埋的提示：乃猜大了惹(＞﹏＜)～～')
-            
-    else: 
-        print('猜了'+str(guess)+'次，你就猜对惹～hiu(^_^A;)～～～')
-        break   
-                
-#判断猜测次数 
-if choice  == age:
-    print('搜噶～那么小埋下线了～拜拜～（￣︶￣）↗')
-    
-else:
-    print('哎呀～你还是木有猜对啊～但是你只有5次机会诶～怎么办啊～')
-    print('那好吧～心软的小埋只好告诉你，我才'+str(age)+'岁哦～')
-	
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+			
+			
+			
+			
