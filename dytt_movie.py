@@ -9,6 +9,7 @@ url = 'http://s.ygdy8.com/plus/s0.php?typeid=1&keyword='+quote(gbkmovie)
 try:
     res = requests.get(url)
     res.encoding ='gbk'
+	#定义res的编码类型为gbk
     soup = BeautifulSoup(res.text,'html.parser')
 
     film_url = soup.find('tr',height='24').find('a')['href']
