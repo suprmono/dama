@@ -28,7 +28,7 @@ while True:
 print(to_addrs)
 '''
 
-to_addr = ['635069882@qq.com']
+to_addrs = ['635069882@qq.com']
 #to_addr = input('请输入收件邮箱：')#'635069882@qq.com'
 
 
@@ -36,7 +36,7 @@ to_addr = ['635069882@qq.com']
 msg = MIMEMultipart() #创建一个MIMEMulipart实例
 
 msg['From'] = Header(from_addr)
-msg['To'] = Header(','.join(to_addr))
+msg['To'] = Header(','.join(to_addrs))
 msg['Subject'] = Header('python test')
 
 ####邮件正文
@@ -49,9 +49,12 @@ text = '''这是一段很长很长的文字
 html = '''
 <p>Dear All:</p>
 <p style="text-indent:2em;">大家好！</p>
-<p style="text-indent:2em;">CMP最新的程序包：CIS_Beta1.0_2019-10-31version-20191125.zip，已上传到 ：http://www.bsw.com.cn/whb/cis/  ，请大家自行前往下载。</p>
+<p style="text-indent:2em;">CMP最新的程序包：CIS_Beta1.0_2019-11-30version-20200102.zip，已上传到 ：http://www.bsw.com.cn/whb/cis/  ，请大家自行前往下载。</p>
 <img src="cid:0">
-<p>本次更新，已经完成的需求单共计254单。</br>具体需求单内容，请下载附件中的落地产品CMP2019-10-31版本需求优化查看。</p>
+<p> Chrome 浏览器下载地址：
+（64位）http://www.bsw.com.cn/whb/TOOL/chrome_installer_64.exe
+（32位）http://www.bsw.com.cn/whb/TOOL/chrome_installer_x86.exe</p>
+<p>本次更新，已经完成的需求单共计247单。</br>具体需求单内容，请下载附件中的CMP软件20191130版本升级内容说明_20191230查看。</p>
 '''
 #msg.attach(MIMEText(text,'plain','utf-8'))
 msg.attach(MIMEText(html,'html','utf-8'))
