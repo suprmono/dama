@@ -12,11 +12,11 @@ class concert():
 	def __init__(self):
 		self.damai_url='https://www.damai.cn'
 
-		self.login_url='https://passport.damai.cn/login?ru=https%3A%2F%2Fwww.damai.cn%2F'
+		self.login_url='https://passport.damai.cn/login?ru=https%3A%2F%2Fwww.damai.cn%2F'#登录地址
 
-		self.target_url='https://detail.damai.cn/item.htm?spm=a2oeg.home.card_0.ditem_6.1d3c23e1LaK3jr&id=610050554319'#购买页面地址
+		self.target_url='https://detail.damai.cn/item.htm?spm=a2oeg.home.searchtxt.ditem_0.591b23e11E2rvA&id=611057434615'#购买页面地址
 
-		self.pricelist = ['\'180元\'','\'380元\'','\'680元\'']#需要购买的票价，按优先级
+		self.pricelist = ['\'780元\'','\'980元\'','\'1580元\'']#需要购买的票价，按优先级
 
 		self.s_times=1
 		
@@ -36,7 +36,7 @@ class concert():
 			'Secure': False}
 			self.driver.add_cookie(cookie_dict)
 					
-	def get_cookie(self):
+	def get_cookie(self):#先扫码登录获取cookie并保存
 		self.driver.get(self.damai_url)
 		print("###请点击登录###")
 		time.sleep(2)
@@ -59,7 +59,7 @@ class concert():
 					if ticket_path.text == '缺货登记':
 						print('###'+i+'的票没有了'+'###')
 						
-				except:
+				except:#找不到'缺货登记'的元素会报错，则执行有余票的逻辑
 					self.again = False					
 					print('###现在购买的是'+i+'的票###')
 					ticket_path=self.driver.find_element_by_xpath("//div[contains(text(),"+i+")]")
@@ -67,15 +67,15 @@ class concert():
 					num = self.driver.find_element_by_xpath("//a[@class='cafe-c-input-number-handler cafe-c-input-number-handler-up']")
 					num.click()#如果买两张票，就点击一下，买一张不需要执行
 					buybtn = self.driver.find_element_by_xpath("//div[@class='buybtn']")
-					buybtn.click()
+					buybtn.click()#(备注：此处点击购买按钮之后有可能弹出提示框，仍需测试)
 					self.check_order()
 					break
 			
 
 	def check_order(self):
 		#time.sleep(3)
-		element1 = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.CLASS_NAME,'next-checkbox-label')))#
-		element2 = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH,"//div[@class='submit-wrapper']/button[@type='button']")))
+		element1 = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME,'next-checkbox-label')))#等待观演人元素加载
+		element2 = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH,"//div[@class='submit-wrapper']/button[@type='button']")))#等待提交订单按钮加载
 		buyer_list = self.driver.find_elements_by_xpath("//span[@class='next-checkbox-label']")
 		people = int(self.driver.find_element_by_xpath("//div[@class='ticket-buyer-title']/span/em").text)
 		for i in range(people):
@@ -104,15 +104,20 @@ class concert():
 	def countdown(self):
 		try:
 			while True:
+				
 				d = self.driver.find_element_by_xpath("//div[@class='item']/span[text()='天']/../span[@class='digit']").text
 				h = self.driver.find_element_by_xpath("//div[@class='item']/span[text()='时']/../span[@class='digit']").text
 				m = self.driver.find_element_by_xpath("//div[@class='item']/span[text()='分']/../span[@class='digit']").text
 				s = self.driver.find_element_by_xpath("//div[@class='item']/span[text()='秒']/../span[@class='digit']").text
+				print('还有%s天%s时%s分%s秒' % (d,h,m,s))
+				time.sleep(2)
 				if d == '0' and h == '0' and m == '0' and s == '0':
 					break
-				else:
+				'''
+				else:			
 					self.driver.refresh()
 					time.sleep(2)
+				'''
 		except:
 			print('###该场次已经开售了###')
 	
