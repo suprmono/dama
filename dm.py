@@ -112,7 +112,7 @@ class concert():
 		#element2 = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH,"//div[@class='submit-wrapper']/button[@type='button']")))#等待提交订单按钮加载
 		
 		retry_time = 1		
-		#'''1、
+		
 		while retry_time <= 10:
 			buyer_list = self.driver.find_elements_by_xpath("//span[@class='next-checkbox-label']")
 			people = int(self.driver.find_element_by_xpath("//div[@class='ticket-buyer-title']/span/em").text)
@@ -135,7 +135,7 @@ class concert():
 			self.driver.get(self.target_url)
 			self.again = True
 			self.choose_ticket()
-		#'''
+		
 		'''
 		buyer_list = self.driver.find_elements_by_xpath("//span[@class='next-checkbox-label']")
 		people = int(self.driver.find_element_by_xpath("//div[@class='ticket-buyer-title']/span/em").text)
