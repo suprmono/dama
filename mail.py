@@ -7,11 +7,11 @@ from email.mime.multipart import MIMEMultipart
 from email.header import Header
 
 #### 发信方的信息：发信邮箱，QQ邮箱授权码
-from_addr = 'zjk@bsw.com.cn'
-password = 'ZJKtom1324'
+from_addr = ''
+password = ''
 
-#from_addr = input('请输入登录邮箱：')#'zjk@bsw.com.cn'
-#password = input('请输入邮箱密码：')#'ZJKtom1324'
+#from_addr = input('请输入登录邮箱：')#''
+#password = input('请输入邮箱密码：')#''
 
 #### 发信服务器
 smtp_server = 'smtp.exmail.qq.com' 
